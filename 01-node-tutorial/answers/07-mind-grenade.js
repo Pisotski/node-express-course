@@ -1,1 +1,3 @@
-(() => {console.log('L.O.G.A.N')})()
+(() => {
+	console.log("L.O.G.A.N");
+})();

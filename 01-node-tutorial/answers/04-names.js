@@ -1,4 +1,4 @@
-const kendall = 'Kendall'
-const roman = 'Roman'
+const kendall = "Kendall";
+const roman = "Roman";
 
-module.exports = {kendall, roman}
+module.exports = { kendall, roman };
