@@ -21,13 +21,17 @@ const getBody = (req, callback) => {
 };
 
 // here, you could declare one or more variables to store what comes back from the form.
+let number;
 let item = "Enter something below.";
+let h1Text = "Form";
+let color = "coral";
 
 // here, you can change the form below to modify the input fields and what is displayed.
 // This is just ordinary html with string interpolation.
 const form = () => {
   return `
-  <body>
+  <body style="background-color:${color};">
+  <h1>${h1Text}</h1>
   <p>${item}</p>
   <form method="POST">
   <input name="item"></input>
@@ -45,8 +49,17 @@ const server = http.createServer((req, res) => {
       console.log("The body of the post is ", body);
       // here, you can add your own logic
       if (body["item"]) {
-        item = body["item"];
-      } else {
+        const value = body["item"];
+        if (isNaN(Number(value))) {
+          item = `if it didn't work, html knows no color as ${value}`;
+          color = value
+        } else {
+          number = value
+          item = "must be a string"
+          console.error(`alarm, a number ${number} was entered, Mayday, Mayday`)
+        }
+      } 
+      else {
         item = "Nothing was entered.";
       }
       // Your code changes would end here
