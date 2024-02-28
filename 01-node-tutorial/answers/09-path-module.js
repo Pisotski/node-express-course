@@ -1,3 +1,3 @@
-const path = require('path')
+const path = require("path");
 
-console.log(path.join(__dirname, '/temporary', '.keep'))
+console.log(path.join(__dirname, "/temporary", ".keep"));

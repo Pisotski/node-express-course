@@ -1,7 +1,7 @@
-module.exports.shiv = 'Shiv'
+module.exports.shiv = "Shiv";
 
 const elPresidente = {
-    name: 'Connor'
-}
+	name: "Connor",
+};
 
-module.exports.anotherOne = elPresidente
+module.exports.anotherOne = elPresidente;
