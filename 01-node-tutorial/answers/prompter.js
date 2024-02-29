@@ -24,7 +24,7 @@ const getBody = (req, callback) => {
 let number;
 let item = "Enter something below.";
 let h1Text = "Form";
-let color = "coral";
+let color = "AliceBlue";
 
 // 5. edit prompter add a comment
 // here, you can change the form below to modify the input fields and what is displayed.
@@ -76,5 +76,8 @@ const server = http.createServer((req, res) => {
 });
 
 const port = "3002";
+server.on("request", (req) => {
+	console.log("event received: ", req.method, req.url);
+});
 server.listen(port);
 console.log(`The server is listening on port ${port}.`);
