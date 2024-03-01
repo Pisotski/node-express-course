@@ -1,14 +1,12 @@
 const { writeFile, readFile } = require("fs").promises;
 
-// writeFile returns promises
-
 const writer = async () => {
 	try {
 		await writeFile("./temp.txt", `Hello, I love you, `);
 		await writeFile("./temp.txt", `won't you tell me your name\n`, {
 			flag: "a",
 		});
-		await writeFile("./temporary/temp.txt", `Hello, I love you!`, {
+		await writeFile("./temp.txt", `Hello, I love you!`, {
 			flag: "a",
 		});
 	} catch (err) {
