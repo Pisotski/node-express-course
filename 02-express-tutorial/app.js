@@ -17,10 +17,14 @@ app.get("/api/v1/test", (req, res) => {
 	res.status(200).json({ message: `it worked!` });
 });
 
+app.get("/api/v1/products", (req, res) => {
+	res.status(200).json(products);
+});
+
 app.get("/api/v1/products/:productID", (req, res) => {
 	console.log(req.params);
 	const { productID } = req.params;
-	// FIXME: i want data object to be transformed into a nested object with only necessary data, as such id:{name, image}
+	// FIXME: [DATA TRANSFORMATION]i want data object to be transformed into a nested object with only necessary data, as such id:{name, image}
 	const product = products.find((p) => p.id === Number(productID));
 
 	if (product) res.status(200).json(product);
@@ -32,7 +36,7 @@ app.get("/api/v1/query", (req, res) => {
 	const { search, limit } = req.query;
 
 	// TODO: this part is ultra buggy but it works and it's short
-	// i did it this way for a sake of practice ternary operators
+	// i did it this way for a sake of practice of ternary operators
 	// i'm glad nobody writes code like this
 
 	// Array.filter() and Array.slice() is suggested to use in the assignment
@@ -62,6 +66,7 @@ app.get("/api/v2/query", (req, res) => {
 		const userInfo = people.filter((person) => person.name.includes(search));
 		if (userInfo) json.userInfo = userInfo;
 	}
+
 	if (limit) {
 		// technically this is bad, cause Array.slice() is only making a shallow copy, yet assignment calls for it
 		if (price) {
@@ -72,13 +77,12 @@ app.get("/api/v2/query", (req, res) => {
 			json.products = products.slice(0, parseInt(limit));
 		}
 	}
+
 	if (price && !limit) {
 		json.products = products.filter(
 			(product) => product.price < parseInt(price)
 		);
 	}
-	// const findUser = (name) => people.filter((person) => person.name === name);
-	// const findLimit = (limit) => products.slice(0, parseInt(limit));
 
 	res.status(200).json(json);
 });
