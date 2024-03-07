@@ -28,17 +28,19 @@
 
 const app = require("./stuffThatYouCanIgnore"); // take my word for it :)
 
-app.get("/", (_, res) => res.send(`
+app.get("/", (_, res) =>
+	res.send(`
   <h1>Hi!</h1><a href="/whatisaserver">Visit /whatisaserver to get started!</a>
-`));
+`)
+);
 
 /**
  * Visit `http://localhost:3000/whatisaserver` to run this function and see
  * what it does!
  */
 app.get("/whatisaserver", (request, response) => {
-  response.setHeader("content-type", "text/plain").send(
-    `A server is just a program that runs forever and does a very simple job.
+	response.setHeader("content-type", "text/plain").send(
+		`A server is just a program that runs forever and does a very simple job.
 
 It receives a HTTP request, and sends a HTTP response. HTTP is a
 text-based protocol. That's why it is called hyper-text transfer protocol.
@@ -78,16 +80,16 @@ Visit http://localhost:3000/whatisaserver/html to learn more.
 
 Fun fact: Did you know this is just plain text: 😆
 `
-  );
+	);
 });
 
 /**
  * This is the second step of the interactive tutorial, at `/whatisaserver/html`
  */
 app.get("/whatisaserver/html", (request, response) => {
-  // content-type: text/html is the default, so we don't need to specify it
-  // anymore!
-  response.send(`
+	// content-type: text/html is the default, so we don't need to specify it
+	// anymore!
+	response.send(`
 
     <!--
       Woah, HTML!! Now we can write comments (this text won't appear on
@@ -157,7 +159,7 @@ const STYLE = `
 </style>`;
 
 app.get("/whatisaserver/dynamicHtml", (request, response) => {
-  response.send(`
+	response.send(`
     ${STYLE}
     <body><main>
     <p>
@@ -194,12 +196,11 @@ app.get("/whatisaserver/dynamicHtml", (request, response) => {
     </p>
 
     ${
-      // Don't show the second part of the page until some URL params are
-      // present, which will typically happen after the user clicks the link
-      // above
-      Object.keys(request.query).length !== 0
-
-        ? `
+			// Don't show the second part of the page until some URL params are
+			// present, which will typically happen after the user clicks the link
+			// above
+			Object.keys(request.query).length !== 0
+				? `
 
 
           <!--
@@ -265,14 +266,15 @@ app.get("/whatisaserver/dynamicHtml", (request, response) => {
               <a href="/whatisaserver/dynamicHtml/extra">next demo</a>
             </p>
         `
-        : ""
-    }
+				: ""
+		}
+    <script>alert('hi')</script>
     </body></main>
   `);
 });
 
 app.get("/whatisaserver/dynamicHtml/extra", (request, response) => {
-  response.send(`
+	response.send(`
     ${STYLE}
     <body><main>
     <p>
@@ -289,17 +291,17 @@ app.get("/whatisaserver/dynamicHtml/extra", (request, response) => {
     trickery to work. Remember the ${"javascript"} code runs on the server! --!>
 
     ${
-      // I am using strings that say "true" and "false" which is a bit
-      // confusing. These are strings, not boolean values! Hence, I actually
-      // have a lot more than 2 possibilities; I only turn the lights on
-      // if I have an exact "true". I turn them off for an exact "false".
-      // Otherwise, I do nothing!
-      request.query["lightsOn"] === "true"
-        ? "<style>body { background-color: #ffff82 /* light yellow */ }</style>"
-        : request.query["lightsOn"] === "false"
-        ? "<style>body {background-color: black }</style>"
-        : ""
-    }
+			// I am using strings that say "true" and "false" which is a bit
+			// confusing. These are strings, not boolean values! Hence, I actually
+			// have a lot more than 2 possibilities; I only turn the lights on
+			// if I have an exact "true". I turn them off for an exact "false".
+			// Otherwise, I do nothing!
+			request.query["lightsOn"] === "true"
+				? "<style>body { background-color: #ffff82 /* light yellow */ }</style>"
+				: request.query["lightsOn"] === "false"
+				? "<style>body {background-color: black }</style>"
+				: ""
+		}
 
 
     <h2>Pretty cool!</h2>
@@ -309,13 +311,13 @@ app.get("/whatisaserver/dynamicHtml/extra", (request, response) => {
 });
 
 app.get("/whatisaserver/json", (_, response) => {
-                                // ^ It is not a bad idea to use an underscore
-                                // to displace positional arguments that you
-                                // don't need. I don't need `request`, so I
-                                // just put an _. This is not very beautiful,
-                                // but sometimes developers do this if they
-                                // have no other choice!
-  response.contentType("application/json").send(`
+	// ^ It is not a bad idea to use an underscore
+	// to displace positional arguments that you
+	// don't need. I don't need `request`, so I
+	// just put an _. This is not very beautiful,
+	// but sometimes developers do this if they
+	// have no other choice!
+	response.contentType("application/json").send(`
     {
       "Oh!": "and don't get stressed about JSON!",
       "you see": "JSON is just a nifty way to share structured data between programs",
@@ -365,7 +367,7 @@ app.get("/whatisaserver/json", (_, response) => {
 // - XML can be converted to JSON and vice-versa:
 //   https://codebeautify.org/xmltojson
 app.get("/whatisaserver/xmlcloser", (_, response) => {
-  response.contentType("application/xml").send(`
+	response.contentType("application/xml").send(`
       <xml>
       <so>
       <that>
