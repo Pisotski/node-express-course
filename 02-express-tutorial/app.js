@@ -22,11 +22,11 @@ app.get("/api/v1/products", (req, res) => {
 });
 
 app.get("/api/v1/products/:productID", (req, res) => {
-	console.log(req.params);
 	const { productID } = req.params;
-	// FIXME: [DATA TRANSFORMATION]i want data object to be transformed into a nested object with only necessary data, as such id:{name, image}
+
 	const product = products.find((p) => p.id === Number(productID));
 
+	// TODO: product.hasOwnProperty(id)?
 	if (product) res.status(200).json(product);
 
 	res.status(404).json({ message: "That product was not found." });
@@ -36,11 +36,11 @@ app.get("/api/v1/query", (req, res) => {
 	const { search, limit } = req.query;
 
 	// TODO: this part is ultra buggy but it works and it's short
-	// i did it this way for a sake of practice of ternary operators
+	// i did it this way for a sake of practicing ternary operators
 	// i'm glad nobody writes code like this
 
 	// Array.filter() and Array.slice() is suggested to use in the assignment
-	// Array.filter() returns an array, i'd rather use find
+	// Array.filter() returns an array, i'd rather use find though
 	const findUser = (name) => people.filter((person) => person.name === name);
 	const findLimit = (limit) => products.slice(0, parseInt(limit));
 
@@ -63,12 +63,14 @@ app.get("/api/v2/query", (req, res) => {
 	const json = {};
 
 	if (search) {
+		// in the assignment is says to optionally cover regex in query, i don't think how to do it
+		// i added functionality to find all users that may fit the search query
 		const userInfo = people.filter((person) => person.name.includes(search));
-		if (userInfo) json.userInfo = userInfo;
+		if (userInfo.length) json.userInfo = userInfo;
 	}
 
 	if (limit) {
-		// technically this is bad, cause Array.slice() is only making a shallow copy, yet assignment calls for it
+		// technically this might be bad, cause Array.slice() is only making a shallow copy, yet the assignment calls for it
 		if (price) {
 			json.products = products
 				.filter((product) => product.price < parseInt(price))
