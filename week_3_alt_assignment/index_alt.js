@@ -9,48 +9,167 @@ app.get("/", (_, res) =>
 );
 const STYLE = `
 <style>
+#callback-part1 {
+    text-align: center;
+    font-size: 1em;
+}
 a:link, a:visited {
     color: red;
     padding: 15px 25px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-  }
-  .hell-img {
-    style="width: 40%; 
-    height: 40%; 
-    object-fit: contain;
-  }
+}
+#hell-img {
+    margin: 0 auto;
+}
+#callback-part2 {
+    display:flex;
+    min-width: 40%;
+    justify-content: space-around;
+}
+#callback-hell-text {
+    display: flex;
+    min-width: 40%;
+    flex-flow: column;
+}
+.centered {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all .5s ease-in-out;
+}
 </style>
 `;
 app.get("/whatiscallback", (request, response) => {
 	const { showHellImage, startHell } = request.query;
-	console.log(showHellImage);
+
 	response.send(`
     ${STYLE}
     <body>
-        <div>
-    		<p>
-                Once upon a time people did not know how to describe a deed and ensure the
-                <br />
-                receiver to trust the We now want not to remember what it was, yet
+        <div id="callback-part1">
+            <p>
+                Once upon a time people did not know how <br />to describe a deed and ensure the
+                receiver to trust them <br /> We now want not to remember those days, yet
                 <br />those who lived long ago still remember those times the time of
-                callback
+                callback<br />
                 <a color: red href="/whatiscallback?showHellImage=true">
                 HELL                                                       
                 </a>
             </p>                                                                     
         ${
 					showHellImage
-						? `<img id="hell-img" src="./static/hell.jpg"/>
-            <div id="part-2-wrapper">
-            In the ancient time people used to send a request
-                <div id="callback-part2">
+						? `<img id="hell-img" src="./static/hell.jpg" alt="The Eye Of Sauron"/>
+            <p id="part-2-wrapper">
+            In the ancient time people used to send a request<br />
                 <a href="http://localhost:3001/whatiscallback?showHellImage=true&startHell=true" class="wait" style="color: navy">and wait</a>
-
-                ${startHell ? `<p>callback Started</p>` : ""}
+                <div id="callback-part2">
+                <div id="callback-hell-text"></div>
+                <div id="callback-hell-code"></div>
+                ${
+									startHell
+										? `
+                <script>
+                let spaces = "";
+                let nextChild = document.querySelector("#callback-hell-code");
+                function displayCallback() {
+					const el1 = document.createElement("pre");
+					const el2 = document.createElement("pre");
+					const br = document.createElement("br");
+					el1.innerHTML = spaces + 'callback((doSomething)) {';
+					el2.innerHTML = spaces + '}';
+					nextChild.append(el1, el2);
+					nextChild = el1;
+					spaces += "  ";
+				}
+                function createElementWithText(el, text) {
+                    const element = document.createElement(el);
+                    element.innerHTML = text;
+                    document.querySelector("#callback-hell-text").append(element);
+                }
+                function morpheus() {
+					const relocate = () => {
+						location.href = "/whatisapromise";
+					};
+					const el0 = document.createElement("div");
+					const el1 = document.createElement("div");
+					const el2 = document.createElement("button");
+					const el3 = document.createElement("button");
+					const img = document.createElement("img");
+					el0.setAttribute(
+						"style",
+						"display: flex; flex-flow:column; align-items: center;"
+					);
+					el1.setAttribute(
+						"style",
+						"display: flex;  width: 100%; justify-content: space-around"
+					);
+					el2.setAttribute(
+						"style",
+						"background-color: red; border: none; padding: 10px 20px; border-radius: 40%;"
+					);
+					el2.onclick = relocate;
+					el3.setAttribute(
+						"style",
+						"background-color: blue; border: none; padding: 10px 20px; border-radius: 40%;"
+					);
+					el3.onclick = relocate;
+					img.src = "./static/morpheus.jpg";
+					img.setAttribute("style", "margin: 0 auto; border-radius: 20%;");
+					el1.append(el2, el3);
+					el0.append(img, el1);
+					nextChild.append(el0);
+					setTimeout(() => {
+						document
+							.querySelector("body")
+							.setAttribute(
+								"style",
+								'background: url("./static/matrix_rain.jpg")'
+							);
+                        el0.setAttribute("class","centered");
+						document.querySelector("#hell-img").style.visibility = "hidden";
+					}, 5000);
+				}
+                setTimeout(() => {
+                    displayCallback();
+                    createElementWithText("span", "and then send another one and wait");
+                    setTimeout(() => {
+                        displayCallback();
+                        createElementWithText("span", "and then send another one and wait");
+                        setTimeout(() => {
+                            displayCallback();
+                            createElementWithText("span", "and then send another one and wait");
+                            setTimeout(() => {
+                                displayCallback();
+                                createElementWithText("span", "and send, and wait");
+                                setTimeout(() => {
+                                    displayCallback();
+                                    createElementWithText("span", "and send, and wait");
+                                    setTimeout(() => {
+                                        displayCallback();
+                                        createElementWithText("span", "and send, and wait");
+                                        setTimeout(() => {
+                                            displayCallback();
+                                            createElementWithText("span", "and send, and wait");
+                                            setTimeout(() => {
+                                                displayCallback();
+                                                createElementWithText("h3", "until the chosen one has arrived");
+                                                setTimeout(morpheus,1999);
+                                            }, 4000)
+                                        }, 2000)
+                                    }, 2000)
+                                }, 2000)
+                            }, 2000)
+                        }, 2000)
+                    }, 2000)
+                }, 2000)
+                </script>
+                `
+										: ""
+								}
                 </div>
-        </div>`
+        </p>`
 						: ""
 				}
         </div>
