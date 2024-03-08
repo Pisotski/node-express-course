@@ -89,7 +89,7 @@ app.get("/whatiscallback", (request, response) => {
                     document.querySelector("#callback-hell-text").append(element);
                 }
                 function morpheus() {
-					const relocate = () => {
+					const enterTheMatrix = () => {
 						location.href = "/whatisapromise";
 					};
 					const el0 = document.createElement("div");
@@ -109,12 +109,12 @@ app.get("/whatiscallback", (request, response) => {
 						"style",
 						"background-color: red; border: none; padding: 10px 20px; border-radius: 40%;"
 					);
-					el2.onclick = relocate;
+					el2.onclick = enterTheMatrix;
 					el3.setAttribute(
 						"style",
 						"background-color: blue; border: none; padding: 10px 20px; border-radius: 40%;"
 					);
-					el3.onclick = relocate;
+					el3.onclick = enterTheMatrix;
 					img.src = "./static/morpheus.jpg";
 					img.setAttribute("style", "margin: 0 auto; border-radius: 20%;");
 					el1.append(el2, el3);
@@ -185,12 +185,12 @@ app.get("/whatisapromise", (_, response) => {
         TODO: clickable but
         promises want to do something else with TODO: clickable Resolve and Reject
         so you must send TODO: clickable Resolve and Reject 
-        as a parameters of a anonymous aka callback (whispering: don't say that word TODO: Harry Potter) TODO: smiley shh.. function
+        as a parameters of a anonymous aka callback (whispering: don't say that word TODO: Harry Potter) function
 
         // design a way to bait user for click
-        in that anonymous TODO: smiley shh.. function you now have access to holy data or evil error.
+        in that anonymous TODO: Harry Potter function you now have access to holy data or evil error.
         Remember, young padawan, that not only light side exists in this world, don't miss out your error handing
-        after all the hard work you then() can do something with holy data or catch() the evil error
+        after all the hard work you .then() can do something with holy data or catch() the evil error
 
         // design a way to bait user for click
         But nothing is perfect in this world, people soon realized that it was not perfect
