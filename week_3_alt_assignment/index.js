@@ -268,7 +268,6 @@ app.get("/whatisaserver/dynamicHtml", (request, response) => {
         `
 				: ""
 		}
-    <script>alert('hi')</script>
     </body></main>
   `);
 });

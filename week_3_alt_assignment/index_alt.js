@@ -7,161 +7,54 @@ app.get("/", (_, res) =>
   <h1>Hi!</h1><a href="/whatiscallback">Visit /whatiscallback to get started!</a>
 `)
 );
+const STYLE = `
+<style>
+a:link, a:visited {
+    color: red;
+    padding: 15px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .hell-img {
+    style="width: 40%; 
+    height: 40%; 
+    object-fit: contain;
+  }
+</style>
+`;
+app.get("/whatiscallback", (request, response) => {
+	const { showHellImage, startHell } = request.query;
+	console.log(showHellImage);
+	response.send(`
+    ${STYLE}
+    <body>
+        <div>
+    		<p>
+                Once upon a time people did not know how to describe a deed and ensure the
+                <br />
+                receiver to trust the We now want not to remember what it was, yet
+                <br />those who lived long ago still remember those times the time of
+                callback
+                <a color: red href="/whatiscallback?showHellImage=true">
+                HELL                                                       
+                </a>
+            </p>                                                                     
+        ${
+					showHellImage
+						? `<img id="hell-img" src="./static/hell.jpg"/>
+            <div id="part-2-wrapper">
+            In the ancient time people used to send a request
+                <div id="callback-part2">
+                <a href="http://localhost:3001/whatiscallback?showHellImage=true&startHell=true" class="wait" style="color: navy">and wait</a>
 
-app.get("/whatiscallback", (_, response) => {
-	response.send(
-		`	<body>
-		<div>
-			Once upon a time people did not know how to describe a deed and ensure the
-			<br />
-			receiver to trust the We now want not to remember what it was, yet
-			<br />those who lived long ago still remember those times the time of
-			callback
-			<span style="color: red" id="hell"
-				>hell
-				<br />
-				<img
-					id="hell-img"
-					src="./static/hell.jpg"
-					style="width: 40%; height: 40%; object-fit: contain; display: none"
-				/>
-			</span>
-			<div style="display: flex">
-				<div id="callback-part2" style="display: none">
-					In the ancient time people used to send a request
-					<span class="wait" style="color: navy">and wait</span>
-
-					<span id="wait1" style="display: none"
-						>and then send another one and wait</span
-					><span id="wait2" style="display: none">
-						and another one and wait
-					</span>
-					<span id="wait3" style="display: none"
-						>... and then could wait for a very long time
-					</span>
-					<h3 id="wait-last" style="display: none">
-						until the chosen one has arrived:
-					</h3>
-				</div>
-				<div id="callback-hell-code"></div>
-			</div>
-		</div>
-		<script>
-			let spaces = "";
-			let waitStart;
-			let nextChild = document.querySelector("#callback-hell-code");
-			const displayElement = (selector) => {
-				document.querySelector(selector).style.display = "block";
-			};
-			document.querySelector("#hell").onclick = () => {
-				displayElement("#hell-img");
-				setTimeout(() => {
-					document.querySelector("#callback-part2").style.display = "block";
-				}, 1);
-			};
-			document.querySelector(".wait").onclick = () => {
-				function displayCallback() {
-					const el1 = document.createElement("pre");
-					const el2 = document.createElement("pre");
-					const br = document.createElement("br");
-					el1.innerHTML = spaces + callback((doSomething)) {';
-					el2.innerHTML = spaces + }';
-					nextChild.append(el1, el2);
-					nextChild = nextChild.children[0];
-					spaces += "  ";
+                ${startHell ? `<p>callback Started</p>` : ""}
+                </div>
+        </div>`
+						: ""
 				}
-				displayCallback();
-				function morpheus() {
-					const relocate = () => {
-						location.href = "./whatisasyncawait";
-					};
-					const el0 = document.createElement("div");
-					const el1 = document.createElement("div");
-					const el2 = document.createElement("button");
-					const el3 = document.createElement("button");
-					const img = document.createElement("img");
-					el0.setAttribute(
-						"style",
-						"display: flex; flex-flow:column; align-items: center;"
-					);
-					el1.setAttribute(
-						"style",
-						"display: flex;  width: 100%; justify-content: space-around"
-					);
-					el2.setAttribute(
-						"style",
-						"background-color: red; border: none; padding: 10px 20px; border-radius: 40%;"
-					);
-					el2.onclick = relocate;
-					el3.setAttribute(
-						"style",
-						"background-color: blue; border: none; padding: 10px 20px; border-radius: 40%;"
-					);
-					el3.onclick = relocate;
-					img.src = "./static/morpheus.jpg";
-					img.setAttribute("style", "margin: 0 auto;");
-					el1.append(el2, el3);
-					el0.append(img, el1);
-					nextChild.append(el0);
-					setTimeout(() => {
-						document
-							.querySelector("body")
-							.setAttribute(
-								"style",
-								'background: url("./static/matrix_rain.jpg")'
-							);
-						document.querySelector("#hell-img").style.visibility = "hidden";
-					}, 2000);
-				}
-				if (!waitStart) {
-					setTimeout(() => {
-						displayCallback();
-						displayElement("#wait1");
-						setTimeout(() => {
-							displayCallback();
-							displayElement("#wait2");
-							setTimeout(() => {
-								displayCallback();
-								displayElement("#wait3");
-								setTimeout(() => {
-									displayCallback();
-									setTimeout(() => {
-										displayCallback();
-										setTimeout(() => {
-											displayCallback();
-											setTimeout(() => {
-												displayCallback();
-												setTimeout(() => {
-													displayCallback();
-													setTimeout(() => {
-														displayCallback();
-														setTimeout(() => {
-															displayCallback();
-															setTimeout(() => {
-																displayCallback();
-																displayElement("#wait-last");
-																setTimeout(() => {
-																	displayCallback();
-																	morpheus();
-																}, 15);
-															}, 8);
-														}, 2);
-													}, 2);
-												}, 2);
-											}, 2);
-										}, 2);
-									}, 2);
-								}, 15);
-							}, 15);
-						}, 15);
-					}, 15);
-				}
-				waitStart = true;
-			};
-		</script>
-	</body>
-`
-	);
+        </div>
+	</body>`);
 });
 
 app.get("/whatisapromise", (_, response) => {
@@ -236,4 +129,4 @@ app.get("/whysoserious", (request, response) => {
     `);
 });
 
-app.listen(3000);
+app.listen(3001);
