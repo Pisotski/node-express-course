@@ -12,16 +12,17 @@
 
 const express = require("express");
 const bodyParser = require("body-parser");
+const path = require("path");
 
 const app = express();
 
 app.use(express.json({ type: "application/json" }));
 app.use(
-  bodyParser.urlencoded({
-    type: "application/x-www-form-urlencoded",
-    extended: false,
-  })
+	bodyParser.urlencoded({
+		type: "application/x-www-form-urlencoded",
+		extended: false,
+	})
 );
-app.use('/static', express.static('./static'))
+app.use("/static", express.static("./static"));
 
 module.exports = app;
