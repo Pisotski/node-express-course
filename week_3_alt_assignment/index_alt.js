@@ -4,7 +4,7 @@ const app = require("./stuffThatYouCanIgnore"); // take my word for it :)
 
 app.get("/", (_, res) =>
 	res.send(`
-  <h1>Hi!</h1><a href="/whatiscallback">Visit /whatiscallback to get started!</a>
+  <h1>Hi!</h1><a href="/whatiscallback">Visit /whatiscallback to get started. Side note: there is a set of timeouts here and there, they are not longer than 2 seconds. If nothing is going on, please interact with the page there are some clickables!</a>
 `)
 );
 const STYLE = `

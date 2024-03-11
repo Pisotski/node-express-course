@@ -14,11 +14,11 @@ const { products, people } = require("./data");
 app.use(express.static("./public"));
 
 app.get("/api/v1/test", (req, res) => {
-	res.status(200).json({ message: `it worked!` });
+	res.json({ message: `it worked!` });
 });
 
 app.get("/api/v1/products", (req, res) => {
-	res.status(200).json(products);
+	res.json(products);
 });
 
 app.get("/api/v1/products/:productID", (req, res) => {
@@ -27,9 +27,12 @@ app.get("/api/v1/products/:productID", (req, res) => {
 	const product = products.find((p) => p.id === Number(productID));
 
 	// TODO: product.hasOwnProperty(id)?
-	if (product) res.status(200).json(product);
-
-	res.status(404).json({ message: "That product was not found." });
+	if (product?.id) {
+		res.json(product);
+	} else {
+		// without else caused the error, as explained in previous tutorial
+		res.json({ message: "That product was not found." });
+	}
 });
 
 app.get("/api/v1/query", (req, res) => {
@@ -54,7 +57,7 @@ app.get("/api/v1/query", (req, res) => {
 		? { limit: findLimit(limit) }
 		: `incorrect query, no user, no limit`;
 
-	res.status(200).json(answer);
+	res.json(answer);
 });
 
 app.get("/api/v2/query", (req, res) => {
@@ -86,7 +89,7 @@ app.get("/api/v2/query", (req, res) => {
 		);
 	}
 
-	res.status(200).json(json);
+	res.json(json);
 });
 
 // TODO: res.end() res.send() res.json

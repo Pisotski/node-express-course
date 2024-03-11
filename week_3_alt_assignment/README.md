@@ -18,3 +18,10 @@ Questions we'll try to answer are:
 - What is JSON good for?
   sending data between server and client
   making sure there will be no mismatch of both ends
+
+the SSR "Game" from bonus assignment: explanation and implementation of callback hell
+npm run start_alt
+
+- index.html is a static html sample, of how the code looks on client side: open index.html
+
+- index_alt.js will renders the same on server side. from week_3_alt_assignment folder: npm run start_alt
