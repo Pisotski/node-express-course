@@ -42,7 +42,18 @@ app.get("/api/people", (req, res) => {
 	res.status(200).json({ success: true, data: people });
 });
 
-// figure out .send vs .json diff
+app.post("/api/postman/people", (req, res) => {
+	const { name } = req.body;
+
+	if (!name) {
+		return res
+			.status(400)
+			.json({ success: false, msg: "please provide the name value" });
+	}
+	res.status(201).json({ success: true, data: [...people, name] });
+});
+
+// figure out .send() vs .json() diff
 app.post("/api/people", (req, res) => {
 	const { name } = req.body;
 	if (!name) {
@@ -51,6 +62,42 @@ app.post("/api/people", (req, res) => {
 			.json({ success: false, msg: "please provide the name value" });
 	}
 	res.status(201).json({ success: true, person: name });
+});
+
+app.put("/api/people/:id", (req, res) => {
+	const { id } = req.params;
+	const { name } = req.body;
+	let personFound;
+
+	const updatedPeople = people.map((person) => {
+		if (person.id === Number(id)) {
+			personFound = true;
+			person.name = name;
+		}
+		return person;
+	});
+
+	if (!personFound) {
+		return res
+			.status(400)
+			.json({ success: false, msg: `no person with id ${id}` });
+	}
+
+	res.status(201).json({ success: true, updatedPeople });
+});
+
+app.delete("/api/people/:id", (req, res) => {
+	const { id } = req.params;
+
+	const personFound = people.find((person) => person.id === Number(id));
+	if (!personFound) {
+		return res
+			.status(400)
+			.json({ success: false, msg: `no person with id ${id}` });
+	}
+
+	const updatedPeople = people.filter((person) => person.id !== Number(id));
+	res.status(201).json({ success: true, updatedPeople });
 });
 
 app.listen(3000, () => {
