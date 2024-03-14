@@ -5,8 +5,10 @@ const getPeople = (req, res) => {
 };
 
 const addPerson = (req, res) => {
-	people.push({ id: people[people.length - 1].id + 1, name: req.body.name });
-	res.status(201).json({ success: true, name: req.body.name });
+	const lastIdIn_People = people[people.length - 1].id;
+	const { name } = req.body;
+	people.push({ id: lastIdIn_People + 1, name: name });
+	res.status(201).json({ success: true, name: name });
 };
 
 const getPerson = (req, res) => {

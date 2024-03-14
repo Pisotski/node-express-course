@@ -1,29 +1,29 @@
 const { people } = require("../data");
 
-const idChecker = (req, res, next) => {
-	const id = Number(req.params.id);
+const checkId_DB = (req, res, next) => {
+	const id = parseInt(req.params.id);
 	const personFound = people.find((person) => person.id === id);
 	if (!personFound) {
 		return res.status(404).json({
 			success: false,
-			message: "Person not found",
+			message: "Person not found [ID]",
 		});
 	}
 	next();
 };
 
-const nameChecker = (req, res, next) => {
+const checkName_DB = (req, res, next) => {
 	const personFound = people.find((person) => person.name === req.body.name);
 	if (!personFound) {
 		return res.status(404).json({
 			success: false,
-			message: "Person not found",
+			message: "Person not found [NAME]",
 		});
 	}
 	next();
 };
 
-const isNameInBody = (req, res, next) => {
+const isNameInBody_Client = (req, res, next) => {
 	const { name } = req.body;
 	if (!name) {
 		res.status(400).json({
@@ -34,4 +34,5 @@ const isNameInBody = (req, res, next) => {
 	}
 	next();
 };
-module.exports = { idChecker, nameChecker, isNameInBody };
+
+module.exports = { checkId_DB, checkName_DB, isNameInBody_Client };

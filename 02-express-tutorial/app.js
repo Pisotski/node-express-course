@@ -3,7 +3,10 @@ const cookieParser = require("cookie-parser");
 const { products, people } = require("./data");
 const { logger } = require("./middleware/logger");
 const { authorize } = require("./middleware/auth");
-const { isNameInBody, nameChecker } = require("./middleware/entryChecker");
+const {
+	isNameInBody_Client,
+	checkName_DB,
+} = require("./middleware/entryChecker");
 const peopleRouter = require("./routes/people");
 const app = express();
 
@@ -13,7 +16,7 @@ app.use(express.static("./public"), logger);
 app.use(express.json());
 app.use("/api/v1/people", peopleRouter);
 
-app.post("/logon", [isNameInBody, nameChecker], (req, res) => {
+app.post("/logon", [isNameInBody_Client, checkName_DB], (req, res) => {
 	const { name } = req.body;
 	res.cookie("name", name).status(201).json(`hello, ${name}`);
 });
@@ -27,6 +30,8 @@ app.get("/test", authorize, (req, res) => {
 	res.json(`${req.user} authorized`);
 });
 
+// =================================
+// WEEK 3
 app.get("/api/v1/test", (req, res) => {
 	res.json({ message: `it worked!` });
 });
