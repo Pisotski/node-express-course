@@ -166,7 +166,7 @@ const titleCasedNames = names.map((name) => {
 	return name
 		.split(" ")
 		.filter((e) => e)
-		.map((e) => e[0].toUpperCase() + e.slice(1))
+		.map((e) => e[0].toUpperCase() + e.slice(1).toLowerCase())
 		.join(" ");
 });
 
@@ -178,6 +178,8 @@ const titleCasedNames = names.map((name) => {
 
 const onlyNormalizedWithMessage = names.reduce((memo, name) => {
 	const splitName = name.split(" ");
+	let finalName = [];
+
 	const yell = (name) => {
 		name = name
 			.split(" ")
@@ -191,27 +193,22 @@ const onlyNormalizedWithMessage = names.reduce((memo, name) => {
 		yell(name);
 		return memo;
 	}
+
 	for (const word of splitName) {
 		if (word[0] !== word[0].toUpperCase()) {
 			yell(name);
 			return memo;
 		}
-		if (word[word.length - 1] === "z") {
+		if (word[word.length - 1].toLowerCase() === "z") {
 			yell(name);
 			return memo;
 		}
-	}
-	let finalName = [];
-	for (const word of splitName) {
 		const newWord = word[0] + word.slice(1).toLowerCase();
 		finalName = [...finalName, newWord];
 	}
+
 	return [...memo, finalName.join(" ")];
 }, []);
-
-console.log(`===========================`);
-console.log({ onlyNormalizedWithMessage });
-console.log(`===========================`);
 
 // For an extra assignment, you may implement these yourself! Include your
 // changes to this file with your MR for week 3.
