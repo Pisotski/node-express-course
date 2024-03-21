@@ -12,9 +12,7 @@ const addPerson = (req, res) => {
 };
 
 const getPerson = (req, res) => {
-	const persona = people.filter(
-		(person) => person.id === Number(req.params.id)
-	);
+	const persona = people.find((person) => person.id === Number(req.params.id));
 
 	res.json(persona);
 };
