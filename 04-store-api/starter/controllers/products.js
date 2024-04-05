@@ -1,4 +1,5 @@
 const Product = require("../models/product");
+require("colors");
 
 const getAllProductsStatic = async (req, res) => {
 	const products = await Product.find({
@@ -33,16 +34,41 @@ const getAllProducts = async (req, res) => {
 			"<": "$lt",
 			"<=": "$lte",
 		};
-		const regEx = /\b(<|<=|=|>=|>)\b/g;
-		let filters = numericFilters.replace(
-			regEx,
-			(match) => `-${operatorMap[match]}-`
-		);
-		const options = ["price", "rating"];
-		filters = filters.split(",").forEach((item) => {
-			const [field, operator, value] = item.split("-");
-			if (options.includes(field)) {
-				queryObject[field] = { [operator]: parseInt(value) };
+		// ====function used in the guide========
+		// ======================================
+		// const regEx = /\b(<|<=|=|>=|>)\b/g;
+		// let filters = numericFilters.replace(
+		// 	regEx,
+		// 	(match) => `-${operatorMap[match]}-`
+		// );
+		// const options = ["price", "rating"];
+		// filters = filters.split(",").forEach((item) => {
+		// 	const [field, operator, value] = item.split("-");
+		// 	if (options.includes(field)) {
+		// 		queryObject[field] = { [operator]: parseInt(value) };
+		// 	}
+		// });
+
+		// =============================================
+		// my function that i do understand
+		// i promise i will figure out regex one day
+		// =============================================
+		numericFilters.split(",").forEach((queryElement) => {
+			for (let i = 0; i < queryElement.length; i++) {
+				if (operatorMap.hasOwnProperty(queryElement[i])) {
+					let operator = queryElement[i];
+					const field = queryElement.slice(0, i);
+					const operatorNumber = {};
+					if (operatorMap.hasOwnProperty(queryElement[i + 1])) {
+						operator = operator + queryElement[i + 1];
+						i = i + 1;
+					}
+					let numberValue = queryElement.slice(i + 1);
+					const mongoosedOperator = operatorMap[operator];
+					operatorNumber[mongoosedOperator] = numberValue;
+					queryObject[field] = operatorNumber;
+					break;
+				}
 			}
 		});
 	}
