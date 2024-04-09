@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const { login, dashboard } = require("../controllers/controllers");
-const { middleware } = require("../middleware/middleware");
 
 router.get("/hello", dashboard);
 

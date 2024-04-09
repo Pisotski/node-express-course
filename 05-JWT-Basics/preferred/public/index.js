@@ -11,34 +11,53 @@ const serverCall = async (endpoint, method = "GET", headers = {}, body) => {
 	try {
 		const url = API + endpoint;
 		const options = { method, headers, body };
+		const cleanOptions = { ...options };
+		console.log(cleanOptions);
 		const response = await fetch(url, options);
-		const result = await response.json();
-		const div = document.createElement("div");
-		div.innerHTML = result;
-		form.append(div);
-		isLoggedIn = true;
+		return await response.json();
 	} catch (error) {
 		console.error("Error:", error);
 	}
 };
-const sendPassword = (e) => {
+
+const sendPassword = async (e) => {
 	e.preventDefault();
 	const inputValue = JSON.stringify({
-		user: user.value,
-		pwd: pwd.value,
+		username: user.value,
+		password: pwd.value,
 	});
-	serverCall(
-		"/logon",
-		"POST",
-		{ "Content-Type": "application/json" },
-		inputValue
-	);
+	try {
+		const result = await serverCall(
+			"/logon",
+			"POST",
+			{ "Content-Type": "application/json" },
+			inputValue
+		);
+		const div = document.createElement("div");
+		const { msg, token } = result;
+		div.innerHTML = msg;
+		form.append(div);
+		localStorage.setItem("token", token);
+	} catch (error) {
+		console.error("Error:", error);
+	}
 };
 
 form.addEventListener("submit", sendPassword);
 
-const revealSecret = () => {
-	if (isLoggedIn) secret.hidden = false;
+const revealSecret = async () => {
+	try {
+		const headers = {
+			Authorization: `Bearer ${localStorage.getItem("token")}`,
+		};
+		const result = await serverCall("/hello", "GET", headers);
+		if (localStorage.getItem("token")) {
+			secret.innerHTML = `<h2>${result.msg}</h2> <br></br> ${result.secret}`;
+		}
+		secret.hidden = false;
+	} catch (error) {
+		console.error("Error:", error);
+	}
 };
 
 revealSecretButton.addEventListener("click", revealSecret);
