@@ -1,6 +1,13 @@
-const getHelloController = (req, res) => {
-	console.log(`get request`);
-	res.send("hello");
+const login = async (req, res) => {
+	res.json(`Fake Login/Register/Signup Route`);
 };
 
-module.exports = getHelloController;
+const dashboard = async (req, res) => {
+	const luckyNumber = Math.floor(Math.random() * 100);
+	res.status(200).json({
+		msg: `hello, John Wayne`,
+		secret: `here is your lucky number: ${luckyNumber}`,
+	});
+};
+
+module.exports = { login, dashboard };

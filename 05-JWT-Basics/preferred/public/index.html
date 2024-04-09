@@ -7,11 +7,18 @@
 	</head>
 	<body>
 		<form id="auth-form">
-			<label for="auth-input"> Password </label>
-			<input type="text" id="auth-input" />
+			<h2>Login/Register</h2>
+			<br /><br />
+			<label for="auth-username"> Username: </label>
+			<input type="text" id="auth-username" />
+			<br /><br />
+			<label for="auth-password"> Password: </label>
+			<input type="text" id="auth-password" />
 			<br /><br />
 			<button type="submit">Login</button>
 		</form>
+		<p id="locked">Secret</p>
+		<button type="button" id="unlock">Dashboard</button>
 	</body>
 	<script src="./index.js"></script>
 </html>
