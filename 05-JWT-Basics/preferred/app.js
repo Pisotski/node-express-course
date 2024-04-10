@@ -1,8 +1,9 @@
 const express = require("express");
-const authorize = require("./routes/main");
 require("dotenv").config();
 require("express-async-errors");
+const authorize = require("./routes/main");
 const { notFoundMiddleware } = require("./middleware/not-found");
+
 const { errorHandlerMiddleware } = require("./middleware/error-handler");
 
 const port = process.env.PORT;
@@ -13,8 +14,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.use("/api/v1", authorize);
-app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
+app.use(notFoundMiddleware);
 
 const start = async () => {
 	try {

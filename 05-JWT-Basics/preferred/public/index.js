@@ -6,13 +6,13 @@ const secret = document.querySelector("#locked");
 const revealSecretButton = document.querySelector("#unlock");
 secret.hidden = true;
 let isLoggedIn = false;
+const div = document.createElement("div");
+form.append(div);
 
 const serverCall = async (endpoint, method = "GET", headers = {}, body) => {
 	try {
 		const url = API + endpoint;
 		const options = { method, headers, body };
-		const cleanOptions = { ...options };
-		console.log(cleanOptions);
 		const response = await fetch(url, options);
 		return await response.json();
 	} catch (error) {
@@ -33,13 +33,11 @@ const sendPassword = async (e) => {
 			{ "Content-Type": "application/json" },
 			inputValue
 		);
-		const div = document.createElement("div");
-		const { msg, token } = result;
-		div.innerHTML = msg;
-		form.append(div);
+		const { msg, token, ERROR } = result;
+		div.innerHTML = msg || ERROR;
 		localStorage.setItem("token", token);
 	} catch (error) {
-		console.error("Error:", error);
+		console.error("Error:", error.message);
 	}
 };
 
@@ -51,6 +49,10 @@ const revealSecret = async () => {
 			Authorization: `Bearer ${localStorage.getItem("token")}`,
 		};
 		const result = await serverCall("/hello", "GET", headers);
+		if (result.ERROR) {
+			div.innerHTML = result.ERROR;
+			return;
+		}
 		if (localStorage.getItem("token")) {
 			secret.innerHTML = `<h2>${result.msg}</h2> <br></br> ${result.secret}`;
 		}
