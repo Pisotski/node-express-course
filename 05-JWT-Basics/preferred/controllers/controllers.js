@@ -1,30 +1,34 @@
 const { BadRequestError } = require("../errors");
 const jwt = require("jsonwebtoken");
 
-const login = async (req, res) => {
-	const { username, password } = req.body;
-	if (!username || !password) {
-		throw new BadRequestError(`please enter valid username or password`);
+const logon = async (req, res) => {
+	const { name, password } = req.body;
+	if (!name || !password) {
+		throw new BadRequestError(`please enter valid name or password`);
 	}
-	const id = new Date().getDate();
 
-	const token = jwt.sign({ id, username }, process.env.JWT_SECRET, {
-		expiresIn: "30d",
-	});
-
-	res.status(200).json({
-		msg: `user created`,
-		token,
-	});
+	jwt.sign(
+		{ name },
+		process.env.JWT_SECRET,
+		{
+			expiresIn: process.env.EXPIRATION,
+		},
+		(err, token) => {
+			if (err) throw new BadRequestError(`can't get token`);
+			res.status(200).json({
+				token,
+			});
+		}
+	);
 };
 
-const dashboard = async (req, res) => {
+const hello = async (req, res) => {
 	const luckyNumber = Math.floor(Math.random() * 100);
 
 	res.status(200).json({
-		msg: `hello, ${req.user.username}`,
+		msg: `hello, ${req.user.name}`,
 		secret: `here is your lucky number: ${luckyNumber}`,
 	});
 };
 
-module.exports = { login, dashboard };
+module.exports = { logon, hello };

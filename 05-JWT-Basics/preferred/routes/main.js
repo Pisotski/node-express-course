@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const { login, dashboard } = require("../controllers/controllers");
+const { logon, hello } = require("../controllers/controllers");
 const { authenticationMiddleware } = require("../middleware/auth");
 
-router.get("/hello", authenticationMiddleware, dashboard);
+router.get("/hello", authenticationMiddleware, hello);
 
-router.post("/logon", login);
+router.post("/logon", logon);
 
 module.exports = router;

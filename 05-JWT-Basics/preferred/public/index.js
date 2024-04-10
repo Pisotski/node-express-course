@@ -23,7 +23,7 @@ const serverCall = async (endpoint, method = "GET", headers = {}, body) => {
 const sendPassword = async (e) => {
 	e.preventDefault();
 	const inputValue = JSON.stringify({
-		username: user.value,
+		name: user.value,
 		password: pwd.value,
 	});
 	try {
@@ -33,8 +33,8 @@ const sendPassword = async (e) => {
 			{ "Content-Type": "application/json" },
 			inputValue
 		);
-		const { msg, token, ERROR } = result;
-		div.innerHTML = msg || ERROR;
+		const { token, ERROR } = result;
+		div.innerHTML = token ? `user created` : ERROR;
 		localStorage.setItem("token", token);
 	} catch (error) {
 		console.error("Error:", error.message);
