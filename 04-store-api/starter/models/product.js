@@ -1,8 +1,6 @@
 const mongoose = require("mongoose");
 
 const productSchema = new mongoose.Schema({
-	// mongoose will not allow any object to be passed
-	// without name or price
 	name: {
 		type: String,
 		required: [true, "product name must be provided"],
@@ -23,14 +21,6 @@ const productSchema = new mongoose.Schema({
 		type: Date,
 		default: Date.now(),
 	},
-	// mongoose will not allow any other values
-	// than on of enum array values
-	// company: {
-	// 	type: String,
-	// 	enum: ["ikea", "liddy", "caressa", "marcos"],
-	// },
-
-	// same with error handling
 	company: {
 		type: String,
 		enum: {
