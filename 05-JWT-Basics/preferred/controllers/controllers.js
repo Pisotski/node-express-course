@@ -6,7 +6,6 @@ const logon = async (req, res) => {
 	if (!name || !password) {
 		throw new BadRequestError(`please enter valid name or password`);
 	}
-
 	jwt.sign(
 		{ name },
 		process.env.JWT_SECRET,
@@ -14,7 +13,7 @@ const logon = async (req, res) => {
 			expiresIn: process.env.EXPIRATION,
 		},
 		(err, token) => {
-			if (err) throw new BadRequestError(`can't get token`);
+			if (err) throw new BadRequestError(`can't generate token`);
 			res.status(200).json({
 				token,
 			});
